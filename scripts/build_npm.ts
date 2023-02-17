@@ -6,28 +6,7 @@ await emptyDir("./npm");
 await build({
   entryPoints: ["./src/mod.ts"],
   outDir: "./npm",
-  shims: {
-    custom: [{
-      package: {
-        name: "node-fetch",
-        version: "^3.3.0",
-      },
-      globalNames: [{
-        // for the `fetch` global...
-        name: "fetch",
-        // use the default export of node-fetch
-        exportName: "default",
-      }, {
-        name: "Response",
-        exportName: "Response",
-        typeOnly: true,
-      }, {
-        name: "RequestInit",
-        exportName: "RequestInit",
-        typeOnly: true,
-      }],
-    }],
-  },
+  shims: { undici: true },
   typeCheck: true,
   test: false,
   declaration: true,

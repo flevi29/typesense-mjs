@@ -8,6 +8,7 @@ import { getURLWithSearchParams } from "../../core/url_search_params.ts";
 import { type Config } from "../../core/config.ts";
 import { type ApiCall } from "../../core/api_call.ts";
 import {
+  CreatableDocument,
   DeleteOptions,
   DeleteResponse,
   DocumentImportOptions,
@@ -43,7 +44,7 @@ export class Documents<
   async indexDocument<TOptions extends DocumentWriteOptions>(
     document: TOptions["action"] extends "update" | "emplace"
       ? UpdatableDocument<TDocument>
-      : TDocument,
+      : CreatableDocument<TDocument>,
     options?: TOptions,
   ) {
     const response = await this.#apiCall.request(
@@ -98,7 +99,7 @@ export class Documents<
       (TArgs[0] extends DocumentWriteOptions
         ? TArgs[0]["action"] extends "update" | "emplace"
           ? UpdatableDocument<TDocument>
-        : TDocument
+        : CreatableDocument<TDocument>
         : never)[],
     ...args: TArgs
   ) {
@@ -136,6 +137,7 @@ export class Documents<
     document: UpdatableDocument<TDocument>,
     options?: DocumentWriteOptions,
   ) {
+    // @TODO Questionable options, is typesense-js wrong?
     const { id, ...restOfDoc } = document;
     const url = getURLWithSearchParams(`${this.#URL()}/${id}`, options);
     const response = await this.#apiCall.request(url, {

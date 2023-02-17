@@ -87,6 +87,7 @@ export class ApiCall {
     retries = this.#numRetriesPerRequest,
   ): Promise<Response> {
     try {
+      // @TODO use cache property of fetch
       const response = await fetch(
         url,
         this.#getRequestInitWithBaseHeaders(requestOptions),

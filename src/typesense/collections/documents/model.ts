@@ -1,6 +1,12 @@
 // deno-lint-ignore no-explicit-any
 type TypesenseDocument = { id: string; [name: string]: any };
 
+type CreatableDocument<TDocument extends TypesenseDocument> = {
+  [name in keyof TDocument]: undefined extends
+    Extract<TDocument[name], undefined> ? TDocument[name] | null
+    : TDocument[name];
+};
+
 type UpdatableDocument<TDocument extends TypesenseDocument> =
   & Pick<TDocument, "id">
   & {
@@ -166,6 +172,7 @@ type DocumentsExportOptions = {
 };
 
 export type {
+  CreatableDocument,
   DeleteOptions,
   DeleteResponse,
   DocumentImportOptions,
