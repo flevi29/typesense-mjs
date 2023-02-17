@@ -12,6 +12,7 @@ export type {
 export { Documents } from "./typesense/collections/documents/documents.ts";
 export { SearchDocuments } from "./typesense/collections/documents/search_documents.ts";
 export type {
+  CreatableDocument,
   DeleteOptions,
   DeleteResponse,
   DocumentImportOptions,
